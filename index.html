@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wiser Petal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#005995;--violet:#6C63D9;--bg:#F3F7FC;--card:#FFFFFF;--ink:#0B2540;--muted:#566B80;--tint:#D9E4F3;--link:#005995;--line:#D5E0EE;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#06172A;--card:#0E2540;--ink:#EAF2FB;--muted:#9FB4C8;--tint:#25435F;--link:#7DB9E8;--line:#23405E;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#06172A;--card:#0E2540;--ink:#EAF2FB;--muted:#9FB4C8;--tint:#25435F;--link:#7DB9E8;--line:#23405E;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.2;margin:0}
+p{margin:0}
+.wrap{max-width:520px;margin:0 auto;padding:18px 16px 110px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+.muted{color:var(--muted)}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:14px 16px;font:700 16px "Nunito Sans",system-ui,sans-serif;background:var(--brand);color:#fff;cursor:pointer}
+.btn.alt{background:transparent;color:var(--link);border:1.5px solid var(--link)}
+.btn:disabled{opacity:.6;cursor:default}
+.btn.sm{display:inline-block;width:auto;padding:9px 14px;font-size:14px}
+button:focus-visible,label:focus-within{outline:3px solid var(--violet);outline-offset:2px}
+.brandrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.brandrow h1{font-size:30px;color:var(--link)}
+.fl{display:block;margin:0 auto;width:min(72%,270px)}
+.pop{animation:pop .8s ease-out}
+@keyframes pop{40%{transform:scale(1.06)}}
+.big{font:600 52px/1 Fraunces,Georgia,serif;color:var(--link)}
+.row{display:flex;gap:12px;align-items:center}
+.grow{flex:1}
+.stage{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.stage i{flex:none;width:14px;height:14px;border-radius:50%;margin-top:6px;border:2px solid var(--tint)}
+.stage.past i{background:var(--violet);border-color:var(--violet)}
+.stage.now i{border-color:var(--violet);box-shadow:0 0 0 4px var(--tint)}
+.stage.next{opacity:.65}
+.pick{display:block;border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;background:var(--card)}
+.pick input{position:absolute;opacity:0}
+.pick.on{border-color:var(--violet);box-shadow:0 0 0 3px var(--tint)}
+.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));gap:6px}
+.tabs button{flex:1;border:0;background:transparent;color:var(--muted);font:700 14px "Nunito Sans",system-ui,sans-serif;padding:10px 4px;border-radius:12px;cursor:pointer}
+.tabs button.on{background:var(--tint);color:var(--link)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chips button{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:700 14px "Nunito Sans",system-ui,sans-serif;cursor:pointer}
+.chips button.on{border-color:var(--violet);background:var(--tint)}
+.ring{position:relative;width:200px;height:200px;margin:8px auto}
+.ring svg{transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 42px Fraunces,Georgia,serif}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.slot{border:1.5px dashed var(--line);border-radius:14px;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;overflow:hidden;position:relative;background:var(--bg);cursor:pointer;color:var(--muted);font-size:14px;padding:6px;text-align:center}
+.slot img,.cmp img{width:100%;height:100%;object-fit:cover;display:block}
+.slot span,.cmp span{position:absolute;left:6px;bottom:6px;background:rgba(0,0,0,.55);color:#fff;border-radius:8px;padding:2px 8px;font-size:12px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.cmp div{aspect-ratio:3/4;border-radius:12px;overflow:hidden;position:relative}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s;max-width:88vw;text-align:center}
+.toast.on{opacity:1}
+/* intro */
+#intro{position:fixed;inset:0;z-index:50;overflow:hidden;background:radial-gradient(circle at 50% 42%,#0B78BD 0%,#005995 45%,#00294A 100%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s}
+#intro.out{opacity:0;pointer-events:none}
+#intro[hidden]{display:none}
+#intro svg{width:min(78vw,320px);height:auto;overflow:visible;position:relative}
+#intro h1{font-size:clamp(46px,14vw,68px);letter-spacing:.01em;margin-top:2px;opacity:0;animation:fi .9s 5s both;position:relative}
+#intro p{opacity:0;animation:fi .9s 5.5s both;margin-top:6px;color:#CFE3F5;font-size:18px;position:relative}
+#intro #skip{position:absolute;right:16px;top:calc(16px + env(safe-area-inset-top,0px));background:rgba(255,255,255,.16);color:#fff;border:0;border-radius:999px;padding:8px 16px;font:700 14px "Nunito Sans",system-ui,sans-serif;cursor:pointer;z-index:2}
+.bb{position:absolute;bottom:-24px;width:var(--s);height:var(--s);border-radius:50%;background:rgba(255,255,255,.13);animation:rise 9s var(--d) linear infinite}
+.bt{animation:tl 1.2s .3s ease-in-out both;transform-origin:70px 90px}.bt.r{animation-name:tr;transform-origin:250px 90px}
+.st{stroke-dasharray:1;animation:sf .7s 1.5s ease-out both,sh .5s 3.1s forwards}
+.fk{filter:drop-shadow(0 0 12px rgba(142,134,240,.6))}
+.lq{animation:lq 1.4s 1.8s ease-out both}
+.sm{stroke-dasharray:1;animation:sf .9s 3s ease-out both}
+.pt{transform-box:fill-box;transform-origin:50% 100%;animation:pe .9s calc(3.9s + var(--i)*.07s) cubic-bezier(.2,.9,.3,1.2) both}
+.ct{animation:fi .8s 5s both}
+@keyframes tl{to{transform:rotate(68deg)}}
+@keyframes tr{to{transform:rotate(-68deg)}}
+@keyframes sf{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes sh{to{opacity:0}}
+@keyframes lq{from{transform:translateY(100px)}to{transform:translateY(0)}}
+@keyframes pe{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes rise{to{transform:translateY(-115vh)}}
+@media (prefers-reduced-motion:reduce){#intro{display:none}*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="intro" aria-label="Opening animation">
+<button id="skip">Skip</button>
+<i class="bb" style="left:10%;--s:10px;--d:0s"></i><i class="bb" style="left:28%;--s:16px;--d:2.5s"></i><i class="bb" style="left:46%;--s:8px;--d:5s"></i><i class="bb" style="left:64%;--s:14px;--d:1.2s"></i><i class="bb" style="left:80%;--s:9px;--d:3.8s"></i><i class="bb" style="left:92%;--s:18px;--d:6.5s"></i>
+<svg viewBox="0 0 320 360" aria-hidden="true">
+<defs><clipPath id="fc"><path d="M140 205V245L105 320Q100 335 115 335H205Q220 335 215 320L180 245V205Z"/></clipPath>
+<linearGradient id="lq" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#6C63D9"/><stop offset="1" stop-color="#7EC3F2"/></linearGradient>
+<linearGradient id="gl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#BFE0F7" stop-opacity=".8"/></linearGradient></defs>
+<g class="bt"><rect x="45" y="55" width="50" height="70" rx="14" fill="url(#gl)"/><rect x="60" y="35" width="20" height="22" rx="4" fill="#fff"/><rect x="57" y="28" width="26" height="10" rx="5" fill="#6C63D9"/><rect x="48" y="85" width="44" height="37" rx="10" fill="#7EC3F2"/><rect x="52" y="60" width="6" height="52" rx="3" fill="#fff" opacity=".55"/></g>
+<g class="bt r"><rect x="225" y="55" width="50" height="70" rx="14" fill="url(#gl)"/><rect x="240" y="35" width="20" height="22" rx="4" fill="#fff"/><rect x="237" y="28" width="26" height="10" rx="5" fill="#6C63D9"/><rect x="228" y="85" width="44" height="37" rx="10" fill="#8E86F0"/><rect x="232" y="60" width="6" height="52" rx="3" fill="#fff" opacity=".55"/></g>
+<path class="st" pathLength="1" d="M122 74Q150 120 158 208" stroke="#7EC3F2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="st" pathLength="1" d="M198 74Q170 120 162 208" stroke="#8E86F0" stroke-width="5" fill="none" stroke-linecap="round"/>
+<g class="fk"><g clip-path="url(#fc)"><rect class="lq" x="90" y="240" width="140" height="100" fill="url(#lq)"/></g>
+<path d="M140 205V245L105 320Q100 335 115 335H205Q220 335 215 320L180 245V205Z" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></g>
+<path class="sm" pathLength="1" d="M160 205V136" stroke="#6FD0A8" stroke-width="5" fill="none" stroke-linecap="round"/>
+<g transform="translate(160,128) scale(.56)" fill="#8E86F0" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"><g id="ifl"></g><circle class="ct" r="12" fill="#F4C95D" stroke="none"/></g>
+</svg>
+<h1>Wiser Petal</h1><p>Good skin takes time.</p>
+</div>
+
+<div class="wrap" id="view"></div>
+<nav class="tabs" id="tabs" hidden>
+<button data-t="today">Today</button><button data-t="routine">Routine</button><button data-t="check">Check-ins</button><button data-t="wallet">Wallet</button>
+</nav>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const KEY='wiserpetal.v2',CYC=30;
+let S=load(),T='today',onboard={c:'underarm'},showStart=false;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||null}catch(e){return null}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('Couldn’t save on this device, so progress may not be kept.')}}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.i);toast.i=setTimeout(()=>t.classList.remove('on'),2800)}
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const today=()=>iso(new Date());
+const dayNum=()=>Math.round((new Date(today()+'T00:00:00')-new Date(S.start+'T00:00:00'))/864e5);
+
+const CONCERNS={
+underarm:{n:'Underarm pigmentation',note:'Pigmentation tends to change slowly, so compare photos instead of glancing in the mirror.'},
+tan:{n:'Arm or body tan',note:'Tan and uneven tone change gradually. Photos taken in the same light show more than a mirror does.'},
+acne:{n:'Body acne and bumpy skin',note:'Body skin can flare and settle. Holding steady, not getting worse, is worth noticing too.'}};
+const STAGES=[
+{d:0,t:'Planting',s:'Day one. Take your baseline photo. Nothing will look different yet, and that’s expected.'},
+{d:7,t:'Settling in',s:'Weeks 1 to 3. Your skin is getting used to the routine, and most people can’t see change yet.'},
+{d:28,t:'First check-in',s:'Week 4. Still early. Change, if there is any, is usually subtle and easy to miss day to day.'},
+{d:56,t:'Second check-in',s:'Week 8. A fairer point to compare photos, with a steady routine behind you.'},
+{d:84,t:'Third check-in',s:'Week 12. Three months of steady use is a meaningful window to judge. Check your pack’s directions too.'}];
+const stageIdx=n=>{let k=0;STAGES.forEach((s,i)=>{if(n>=s.d)k=i});return k};
+const band=s=>s>=90?'In full bloom':s>=70?'Steady':s>=40?'Finding your rhythm':'Getting started';
+const phase=p=>p>=CYC?'In full bloom':p>=20?'Almost in bloom':p>=8?'Opening':'Bud';
+
+const logged=()=>Object.keys(S.days).length;
+function fl(){const L=logged(),col=S.col.length,done=Math.floor(L/CYC),pend=Math.max(0,done-col);return{L,pend,k:pend?col:done,p:pend?CYC:L%CYC}}
+function stats(){const n=dayNum(),win=Math.min(14,n+1);let c=0;
+for(let i=0;i<win;i++){const d=new Date();d.setDate(d.getDate()-i);if(S.days[iso(d)])c++}
+return{n,score:Math.round(c/win*100),ready:n+1>=7}}
+function sampleState(){const d=new Date();d.setDate(d.getDate()-17);const s={concern:'underarm',start:iso(d),days:{},photos:{},sample:true,col:[]};
+for(let i=0;i<17;i++){if(i===5||i===11)continue;const x=new Date(d);x.setDate(d.getDate()+i);s.days[iso(x)]=true}return s}
+
+/* the flower: a daisy whose petals unfold as routine days are logged */
+function flower(b){
+const e=b*b*(3-2*b),H=34+110*b,Y=236-H,s=.5+.5*b,k=.4+.6*b,P='M0 0C15-8 16-50 0-66C-16-50-15-8 0 0Z';
+const ring=(n,off,sc,col)=>{let o='';for(let i=0;i<n;i++){let a=(off+i*360/n)%360;if(a>180)a-=360;const c=a*.14,r=c+(a-c)*e;o+=`<path d="${P}" transform="rotate(${r.toFixed(1)}) scale(${sc})" fill="${col}"/>`}return o};
+return`<svg class="fl" viewBox="0 0 200 250" role="img" aria-label="Your flower, ${Math.round(b*100)} percent bloomed">
+<ellipse cx="100" cy="240" rx="54" ry="8" fill="var(--tint)"/>
+<line x1="100" y1="240" x2="100" y2="${Y}" stroke="#3F9B7A" stroke-width="6" stroke-linecap="round"/>
+<g transform="translate(100,238) scale(${k})" fill="#3F9B7A"><path d="M0 0C-44-8-56-52-40-84C-24-54-8-34 0 0Z"/><path d="M0 0C44-8 56-52 40-84C24-54 8-34 0 0Z" opacity=".85"/></g>
+<g transform="translate(100,${Y}) scale(${s})" stroke="#fff" stroke-width="1.6" stroke-linejoin="round">${ring(14,0,1,'#8E86F0')}${ring(9,20,.72,'#B9B4F2')}<circle r="${(5+8*b).toFixed(1)}" fill="#F4C95D" stroke="none" opacity="${Math.max(0,Math.min(1,(b-.4)*3))}"/></g></svg>`}
+function paint(b){const x=$('#fx');if(x)x.innerHTML=flower(b)}
+function tween(a,z,ms){ms=ms||1500;let t0;requestAnimationFrame(function f(t){t0=t0||t;const u=Math.min(1,(t-t0)/ms);paint(a+(z-a)*(1-Math.pow(1-u,3)));if(u<1)requestAnimationFrame(f)})}
+
+function msg(w,sc){const e=w==4?'Four weeks is still early for most skin concerns, so a small change, or none yet, is normal.':w==8?'Eight weeks is a fairer point to compare, though change can still be gradual.':'Twelve weeks of steady use is a meaningful window to judge how things are going.';
+if(sc>=70)return`You’ve shown up steadily (routine score ${sc}). ${e} Compare your photos below, and notice small things like texture or comfort too.`;
+if(sc>=40)return`Your routine has been up and down lately (routine score ${sc}), so this isn’t a fully fair read yet. ${e} A few more steady weeks will tell you more.`;
+return`Welcome back. Your routine score is ${sc}, so these photos can’t show a fair result yet. ${e} Pick the routine up again and check back in two weeks.`}
+
+function markToday(){S.days[today()]=true;save()}
+function view(){
+if(!S||showStart){$('#tabs').hidden=true;return onboardView()}
+$('#tabs').hidden=false;
+document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===T));
+$('#view').innerHTML=T==='today'?todayView():T==='routine'?routineView():T==='wallet'?walletView():checkView();
+if(T==='routine')timerPaint();
+}
+function onboardView(){
+$('#view').innerHTML=`<div class="brandrow"><h1>Wiser Petal</h1>${S?'<button class="btn sm alt" id="back">Back to my journey</button>':''}</div>
+<div class="card"><h2>Good skin takes time.</h2><p class="muted" style="margin-top:8px">Log your routine for 30 days and a flower blooms for you to collect. Pick what you’re working on and we’ll show you an honest skin timeline, not a promise.</p></div>
+<div class="card"><h3 style="margin-bottom:12px">What are you working on?</h3>
+${Object.entries(CONCERNS).map(([k,v])=>`<label class="pick ${onboard.c===k?'on':''}"><input type="radio" name="c" value="${k}" ${onboard.c===k?'checked':''}><b>${v.n}</b></label>`).join('')}
+<button class="btn" id="go" style="margin-top:6px">Plant my flower</button></div>
+<button class="btn alt" id="demo">Try a sample journey</button>
+<p class="muted" style="font-size:13px;margin-top:14px">A concept built for Be Bodywise customers, not an official Be Bodywise product. Your photos and progress stay on this device.</p>`;
+document.querySelectorAll('input[name=c]').forEach(i=>i.onchange=()=>{onboard.c=i.value;onboardView()});
+$('#go').onclick=()=>{showStart=false;S={concern:onboard.c,start:today(),days:{},photos:{},col:[]};markToday();T='today';view();toast('Day 1 logged. Take your baseline photo in Check-ins.')};
+$('#demo').onclick=()=>{showStart=false;S=sampleState();save();T='today';view()};
+}
+function todayView(){
+const st=stats(),F=fl(),b=F.p/CYC,done=!!S.days[today()],k=stageIdx(st.n);
+return`<div class="brandrow"><h1>Wiser Petal</h1><button class="btn sm alt" id="start">Reset</button></div><p class="muted" style="margin:-6px 0 12px">${CONCERNS[S.concern].n}</p>
+${S.sample?`<div class="card" style="background:var(--tint)"><b>Sample journey.</b> This is made-up progress, at ${F.L} of ${CYC} routine days. Log today to watch the flower open, or jump ahead.<div class="row" style="margin-top:10px;gap:8px"><button class="btn sm" id="ff">Preview full bloom</button><button class="btn sm alt" id="rs">Restart sample</button></div></div>`:''}
+${F.pend?`<div class="card" style="background:var(--tint)"><h3>Your flower has bloomed</h3><p style="margin:6px 0 10px">${CYC} routine days done. Collect it to add it to your wallet.</p><button class="btn" id="collect">Collect flower</button></div>`:''}
+<div class="card" style="text-align:center"><div id="fx">${flower(b)}</div>
+<h2 style="margin-top:4px">${phase(F.p)}</h2><p class="muted">Flower ${F.k+1}: ${F.p} of ${CYC} routine days</p>
+<button class="btn ${done?'alt':''}" id="log" style="margin-top:14px" ${done?'disabled':''}>${done?'Done for today':'I did my routine today'}</button></div>
+<div class="card"><div class="row"><div class="grow"><p class="muted">Routine score</p>
+${st.ready?`<div class="big">${st.score}</div><p><b>${band(st.score)}</b></p>`:`<div class="big" style="font-size:30px">Warming up</div>`}</div>
+<div class="grow"><p class="muted">Flower bloomed</p><div class="big">${Math.round(b*100)}%</div></div></div>
+<p class="muted" style="font-size:14px;margin-top:10px">The flower measures your routine, not your skin.</p></div>
+<div class="card"><h3>Your skin timeline: week ${Math.floor(st.n/7)+1}</h3><p class="muted" style="margin:6px 0 8px">${CONCERNS[S.concern].note}</p>
+${STAGES.map((s,i)=>`<div class="stage ${i<k?'past':i===k?'now':'next'}"><i></i><div><b>${s.t}</b><p class="muted" style="font-size:14px">${s.s}</p></div></div>`).join('')}
+<p class="muted" style="font-size:13px;margin-top:8px">Timings are general guidance, not a promise. Skin and products vary, so follow the directions on your pack. If your skin feels irritated or is getting worse, speak to a doctor or dermatologist.</p></div>
+<div class="card"><p class="muted" style="font-size:13px">Wiser Petal is a concept built for Be Bodywise customers as part of a fellowship application, not an official Be Bodywise product. Photos and progress stay on this device.</p></div>`}
+function walletView(){const c=S.col,av=c.filter(x=>!x.r).length;
+return`<div class="brandrow"><h1>Wallet</h1></div>
+<div class="card"><div class="row"><div class="grow"><p class="muted">Flowers to redeem</p><div class="big">${av}</div></div><div class="grow"><p class="muted">Collected in total</p><div class="big">${c.length}</div></div></div>
+<p class="muted" style="font-size:14px;margin-top:10px">Log your routine for ${CYC} days and your flower fully blooms. Collect it here.</p></div>
+${c.length?c.map((x,i)=>`<div class="card row"><div style="width:70px">${flower(1)}</div><div class="grow"><b>Flower ${x.k+1}</b><p class="muted">${CYC} routine days</p></div>${x.r?'<span class="muted">Redeemed</span>':`<button class="btn sm" data-rd="${i}">Redeem</button>`}</div>`).join(''):`<div class="card"><p class="muted">No flowers yet. Your first one blooms after ${CYC} routine days.</p></div>`}
+<div class="card"><p class="muted" style="font-size:13px">Concept only: in a live version, redeemed flowers would become Be Bodywise Wallet credit, with amounts set by the brand. Nothing here has real value.</p></div>`}
+
+/* timer + sound */
+let tLen=120,tLeft=120,tRun=false,tI=null,AC=null,PAD=null;
+function ac(){AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC}
+function sound(){const a=ac();if(PAD){PAD.m.gain.setTargetAtTime(0,a.currentTime,.4);const o=PAD.o;setTimeout(()=>o.forEach(x=>x.stop()),1800);PAD=null;return}
+const m=a.createGain(),fl=a.createBiquadFilter(),lfo=a.createOscillator(),ld=a.createGain();m.gain.value=0;fl.type='lowpass';fl.frequency.value=800;
+lfo.frequency.value=.12;ld.gain.value=.02;lfo.connect(ld);ld.connect(m.gain);fl.connect(m);m.connect(a.destination);
+const o=[130.81,196,261.63,329.63].map((fq,i)=>{const x=a.createOscillator();x.type='sine';x.frequency.value=fq;x.detune.value=i*3;const g=a.createGain();g.gain.value=.25;x.connect(g);g.connect(fl);x.start();return x});
+lfo.start();o.push(lfo);m.gain.setTargetAtTime(.08,a.currentTime,1);PAD={m,o}}
+function chime(){if(!AC)return;const o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=880;g.gain.setValueAtTime(.12,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+1.6);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+1.7)}
+const fmt=s=>Math.floor(s/60)+':'+pad(s%60);
+function timerPaint(){const r=$('#ring'),t=$('#tm');if(!r)return;t.textContent=fmt(tLeft);r.setAttribute('stroke-dashoffset',(1-tLeft/tLen)*100)}
+function tStop(){clearInterval(tI);tRun=false}
+function tStart(){if(tRun){tStop();view();return}ac();tRun=true;tI=setInterval(()=>{tLeft--;if(tLeft<=0){tStop();tLeft=tLen;chime();if(S&&!S.days[today()]){markToday();toast('Routine complete. Today is logged on your flower.')}else toast('Routine complete.');if(T==='routine')view();return}timerPaint()},1000);view()}
+function routineView(){return`<div class="brandrow"><h1>Routine</h1></div>
+<div class="card" style="text-align:center"><p class="muted">Set the time to match your pack’s directions.</p>
+<div class="chips" style="justify-content:center">${[[30,'30 sec'],[60,'1 min'],[120,'2 min'],[180,'3 min'],[300,'5 min']].map(([s,l])=>`<button data-len="${s}" class="${tLen===s?'on':''}">${l}</button>`).join('')}</div>
+<div class="ring"><svg width="200" height="200" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="var(--tint)" stroke-width="2.4"/><circle id="ring" cx="20" cy="20" r="16" fill="none" stroke="#6C63D9" stroke-width="2.4" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="0"/></svg><b id="tm">${fmt(tLeft)}</b></div>
+<button class="btn" id="tgo">${tRun?'Pause':'Start routine'}</button>
+
+<p class="muted" style="font-size:14px">Finishing the timer logs today on your flower.</p></div>`}
+
+/* photos */
+const SLOTS=[['base','Day 1'],['w4','Week 4'],['w8','Week 8'],['w12','Week 12']];
+function pick(slot){const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,480/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);S.photos[slot]=c.toDataURL('image/jpeg',.72);save();view()};im.src=r.result};r.readAsDataURL(f)};i.click()}
+function checkView(){
+const st=stats(),n=st.n,due=[28,56,84].filter(d=>n>=d),w=due.length?due.pop()/7:0;
+const later=['w12','w8','w4'].find(k=>S.photos[k]);
+return`<div class="brandrow"><h1>Check-ins</h1></div>
+<div class="card"><h3>${w?'Your week '+w+' check-in':'Your first check-in opens at week 4'}</h3>
+<p style="margin-top:8px">${w?msg(w,st.score):'Until then, take your baseline photo and keep going. Photos are only useful if they match, so use the same spot, the same light and the same distance, with no filters.'}</p></div>
+<div class="card"><h3 style="margin-bottom:10px">Your photos</h3><div class="slots">
+${SLOTS.map(([k,l])=>`<div class="slot" data-slot="${k}" role="button" tabindex="0">${S.photos[k]?`<img src="${S.photos[k]}" alt="${l} photo"><span>${l}</span>`:`<b>${l}</b>Add photo`}</div>`).join('')}</div>
+${S.photos.base&&later?`<h3 style="margin-top:16px">Side by side</h3><div class="cmp"><div><img src="${S.photos.base}" alt="Day 1"><span>Day 1</span></div><div><img src="${S.photos[later]}" alt="Later"><span>${SLOTS.find(x=>x[0]===later)[1]}</span></div></div><p class="muted" style="font-size:14px;margin-top:8px">You decide what you see. Wiser Petal doesn’t score your skin.</p>`:`<p class="muted" style="font-size:14px;margin-top:10px">${S.sample?'The sample has no photos. Start your own journey to add some.':'Add your day 1 photo and a later one to see them side by side.'} Photos never leave this device.</p>`}</div>`}
+
+document.addEventListener('click',e=>{
+const t=e.target.closest('button,.slot');if(!t)return;
+if(t.dataset.t){T=t.dataset.t;view();scrollTo(0,0)}
+else if(t.id==='log'){if(S.days[today()])return;const b0=fl().p/CYC;markToday();view();tween(b0,fl().p/CYC);$('#fx').classList.add('pop');toast('Day '+logged()+' logged. Your flower opened a little more.')}
+else if(t.id==='ff'){const b0=fl().p/CYC,x=new Date(S.start+'T00:00:00');while(logged()<CYC){x.setDate(x.getDate()-1);S.days[iso(x)]=true}save();view();tween(b0,fl().p/CYC,2200)}
+else if(t.id==='collect'){S.col.push({k:S.col.length,r:false});save();view();toast('Flower collected. It’s in your wallet.')}
+else if(t.dataset.rd){S.col[+t.dataset.rd].r=true;save();view();toast('Marked as redeemed. This is a concept, so no real credit is added.')}
+else if(t.id==='start'){if(S&&!S.sample&&!t.dataset.arm){t.dataset.arm=1;t.textContent='Tap again to reset';setTimeout(()=>{if(t.isConnected){delete t.dataset.arm;t.textContent='Reset'}},4000);return}tStop();tLeft=tLen;try{localStorage.removeItem(KEY)}catch(x){}S=null;T='today';showStart=false;view();scrollTo(0,0);showIntro()}
+else if(t.id==='rs'){S=sampleState();save();view();scrollTo(0,0)}
+else if(t.id==='back'){showStart=false;view()}
+
+else if(t.dataset.len){tStop();tLen=tLeft=+t.dataset.len;view()}
+else if(t.id==='tgo')tStart();
+
+else if(t.dataset.slot)pick(t.dataset.slot);
+});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.dataset&&e.target.dataset.slot){e.preventDefault();pick(e.target.dataset.slot)}});
+
+$('#ifl').innerHTML=Array.from({length:12},(_,i)=>`<g transform="rotate(${i*30})"><path class="pt" style="--i:${i}" d="M0 0C15-8 16-50 0-66C-16-50-15-8 0 0Z"/></g>`).join('')+Array.from({length:8},(_,i)=>`<g transform="rotate(${i*45+22})"><path class="pt" style="--i:${i+4}" fill="#B9B4F2" d="M0 0C15-8 16-50 0-66C-16-50-15-8 0 0Z" transform="scale(.7)"/></g>`).join('');
+const INTRO=$('#intro').innerHTML;let iT;
+function hideIntro(){clearTimeout(iT);const i=$('#intro');i.classList.add('out');setTimeout(()=>{if(i.classList.contains('out'))i.hidden=true},700)}
+function showIntro(){const i=$('#intro');i.innerHTML=INTRO;i.hidden=false;void i.offsetWidth;i.classList.remove('out');$('#skip').onclick=hideIntro;clearTimeout(iT);iT=setTimeout(hideIntro,7600)}
+showIntro();
+if(S&&S.sample&&dayNum()!==17){S=sampleState();save()}
+view();
+</script>
+</body>
+</html>
